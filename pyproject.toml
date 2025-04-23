@@ -1,0 +1,101 @@
+[project]
+name = "spectral-grid-inference"
+authors = [
+  { name = "adrn", email = "adrn@users.noreply.github.com" },
+]
+description = "Experiments with the Lux model."
+readme = "README.md"
+requires-python = ">=3.11"
+dynamic = ["version"]
+dependencies = [
+  "arviz",
+  "astropy",
+  "ezpadova @ git+https://github.com/mfouesneau/ezpadova",
+  "jax",
+  "jaxtyping",
+  "h5py",
+  "matplotlib",
+  "numpy",
+  "numpyro",
+  "scipy",
+  "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+  "jupyter_client",
+  "ipykernel",
+  "ipywidgets",
+  "pre-commit"
+]
+
+[tool.uv]
+dev-dependencies = [
+  "spectral-grid-inference[dev]",
+]
+
+[tool.mypy]
+files = ["src", "tests"]
+python_version = "3.11"
+warn_unused_configs = true
+strict = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+warn_unreachable = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.ruff]
+
+[tool.ruff.lint]
+extend-select = [
+  "ARG",      # flake8-unused-arguments
+  "B",        # flake8-bugbear
+  "C4",       # flake8-comprehensions
+  "EM",       # flake8-errmsg
+  "EXE",      # flake8-executable
+  "G",        # flake8-logging-format
+  "I",        # isort
+  "ICN",      # flake8-import-conventions
+  "NPY",      # NumPy specific rules
+  "PD",       # pandas-vet
+  "PGH",      # pygrep-hooks
+  "PIE",      # flake8-pie
+  "PL",       # pylint
+  "PT",       # flake8-pytest-style
+  "PTH",      # flake8-use-pathlib
+  "RET",      # flake8-return
+  "RUF",      # Ruff-specific
+  "SIM",      # flake8-simplify
+  "T20",      # flake8-print
+  "UP",       # pyupgrade
+  "YTT",      # flake8-2020
+]
+ignore = [
+  "PLR09",    # Too many <...>
+  "PLR2004",  # Magic value used in comparison
+  "ISC001",   # Conflicts with formatter
+  "F722",     # Syntax error in forward type annotation for jaxtyping
+  "G004",     # Logging statement contains f string
+]
+isort.required-imports = []
+# Uncomment if using a _compat.typing backport
+# typing-modules = ["lux_experiments._compat.typing"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+"noxfile.py" = ["T20"]
+
+
+[tool.pylint]
+py-version = "3.11"
+ignore-paths = [".*/_version.py"]
+reports.output-format = "colorized"
+similarities.ignore-imports = "yes"
+messages_control.disable = [
+  "design",
+  "fixme",
+  "line-too-long",
+  "missing-module-docstring",
+  "missing-function-docstring",
+  "wrong-import-position",
+]
